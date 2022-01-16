@@ -1,0 +1,5 @@
+.elements__like_active {
+  background-image: url(../../../../images/like-heart-black.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
