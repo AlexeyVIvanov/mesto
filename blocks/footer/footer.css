@@ -3,3 +3,11 @@
   margin: 0 auto;
 }
 
+@media screen and (max-width: 917px) {
+
+  .footer {
+    width: calc(100% - 38px);
+  }
+
+}
+
