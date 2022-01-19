@@ -24,13 +24,11 @@
 
 .popup__input::placeholder {
   font-family: inherit;
+  color: #000000;
 }
 
 .popup__input::-ms-input-placeholder {
   font-family: inherit;
-}
-
-.popup__input::placeholder {
   color: #000000;
 }
 
@@ -39,10 +37,6 @@
 }
 
 .popup__input::-moz-placeholder {
-  color: #000000;
-}
-
-.popup__input::-ms-input-placeholder {
   color: #000000;
 }
 
