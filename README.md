@@ -19,5 +19,5 @@
 фотографий, ставить лайки.
 
 ## H2 Ссылка
- [MESTO](https://alexeyvivanov.github.io/MESTO/)
+ [MESTO](https://alexeyvivanov.github.io/mesto/)
 
