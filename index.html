@@ -32,34 +32,34 @@
       <section class="elements">
         <figure class="elements__figure">
           <img class="elements__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Фото храма в горах">
-          <figcaption class="elements__caption">Карачаевск<span class="elements__like"></span></figcaption>
+          <figcaption class="elements__caption">Карачаевск<button class="elements__like"></button></figcaption>
         </figure>
         <figure class="elements__figure">
           <img class="elements__image" src="images/kirill-pershin-1404681-unsplash.png" alt="Фото Эльбруса">
-          <figcaption class="elements__caption">Гора Эльбрус<span class="elements__like"></span></figcaption>
+          <figcaption class="elements__caption">Гора Эльбрус<button class="elements__like"></button></figcaption>
         </figure>
         <figure class="elements__figure">
           <img class="elements__image" src="images/kirill-pershin-1556355-unsplash.png" alt="Фото Домбая">
-          <figcaption class="elements__caption">Домбай<span class="elements__like"></span></figcaption>
+          <figcaption class="elements__caption">Домбай<button class="elements__like"></button></figcaption>
         </figure>
         <figure class="elements__figure">
           <img class="elements__image" src="images/kirill-pershin-1404681-unsplash.png" alt="Фото Эльбруса">
-          <figcaption class="elements__caption">Гора Эльбрус<span class="elements__like"></span></figcaption>
+          <figcaption class="elements__caption">Гора Эльбрус<button class="elements__like"></button></figcaption>
         </figure>
         <figure class="elements__figure">
           <img class="elements__image" src="images/kirill-pershin-1556355-unsplash.png" alt="Фото Домбая">
-          <figcaption class="elements__caption">Домбай<span class="elements__like"></span></figcaption>
+          <figcaption class="elements__caption">Домбай<button class="elements__like"></button></figcaption>
         </figure>
         <figure class="elements__figure">
           <img class="elements__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="Фото храма в горах">
-          <figcaption class="elements__caption">Карачаево-Ч...<span class="elements__like"></span></figcaption>
+          <figcaption class="elements__caption">Карачаево-Ч...<button class="elements__like"></button></figcaption>
         </figure>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <section class="popup popup_opened">
+    <section class="popup">
       <div class="popup__container">
         <button class="popup__close">
           <img src="images/Close Icon.png" alt="Кнопка закрытия регистрационной формы" width="100%" height="100%">
@@ -67,14 +67,14 @@
         <form class="popup__form">
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__input-container">
-            <input  class="popup__input" type="text" name="name" placeholder="Жак-Ив Кусто">
-            <input class="popup__input" type="text" name="profession" placeholder="Исследователь океана">
+            <input  class="popup__input" id="topfield" type="text" name="name" value="" placeholder="Имя">
+            <input class="popup__input" id="bottomfield" type="text" name="profession" value="" placeholder="Профессия">
           </fieldset>
           <button class="popup__submit">Сохранить</button>
         </form>
       </div>
     </section>
-    <script src="scripts/script.js"></script>
+    <script src="scripts/index.js"></script>
   </div>
 
 </body>
