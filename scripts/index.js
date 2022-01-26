@@ -11,8 +11,6 @@ let professionInput = document.querySelector('#bottomfield');
 let nameProfile = document.querySelector('.profile__title');
 let professionProfile = document.querySelector('.profile__subtitle');
 
-let submitButton = document.querySelector('.popup__submit');
-
 // Открытие-закрытие Попапа
 
 openPopupButton.addEventListener('click', function () {
@@ -28,12 +26,6 @@ closePopupButton.addEventListener('click', function () {
   formElement.reset()
 });
 
-// Закрытие Попапа после нажатия кнопки Сохранить
-
-submitButton.addEventListener('click', function () {
-  popup.classList.remove('popup_opened')
-});
-
 // Обработчик «отправки» формы
 
 function formSubmitHandler (evt) {
@@ -45,6 +37,8 @@ professionInput.textContent = professionInput.value;
     // Вставьте новые значения с помощью textContent
 nameProfile.textContent = nameInput.value;
 professionProfile.textContent = professionInput.value;
+// Закрытие Попапа после нажатия кнопки Сохранить
+popup.classList.remove('popup_opened');
 }
 
 // Прикрепляем обработчик к форме:

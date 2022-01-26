@@ -12,7 +12,6 @@
 
   .profile {
     width: calc(100% - 38px);
-
   }
 
 }
@@ -20,7 +19,6 @@
 @media screen and (max-width: 767px) {
 
   .profile {
-    width: calc(100% - 38px);
     padding: 42px 0 36px;
     flex-direction: column;
     justify-content: flex-start;
