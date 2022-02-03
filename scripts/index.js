@@ -78,31 +78,54 @@ const initialCards = [
 const template = document.querySelector('.cards').content;
 let elementsContainer = document.querySelector('.elements');
 
+// создаем карточки
 function createCard(name, link) {
   // клонируем содержимое тега template
   let card = template.querySelector('.elements__item').cloneNode(true);
   // наполняем содержимым
   card.querySelector('.elements__title').textContent = name;
   card.querySelector('.elements__image').src = link;
+  card.querySelector('.elements__image').alt = name;
+
   // лайки
-  let buttonLike = document.querySelector('elements__like');
   card.querySelector('.elements__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('elements__like_active');
 
-    return card;
   });
 
+  // корзина
+  card.querySelector('.elements__trash').addEventListener('click', function (evt) {
+    evt.target.closest('.elements__item').remove();
+
+  });
+
+  // картинка
+  card.querySelector('.elements__image').addEventListener('click', function () {
+    document.querySelector('.popup__image').src = link;
+    document.querySelector('.popup__caption').textContent = name;
+    // открытие попапа picture
+    document.querySelector('#picture').classList.add('popup_opened');
+
+  });
+
+  return card;
 }
 
 function render(card) {
-  // отображаем на странице
-  elementsContainer.append(card);
+  // отображаем на странице карточки
+  elementsContainer.prepend(card);
+
 }
 
-initialCards.forEach(function(item) {
-  let cardItem = createCard(item.name, item.link);
+// перебираем массив
+let initialCardsRevers = initialCards.reverse();
+initialCardsRevers.forEach(function(item) {
+let cardItem = createCard(item.name, item.link);
+
 render(cardItem);
+
 });
+
 
 // попап елементс
 let openPopupButtonElements = document.querySelector('.profile__add-button');
@@ -117,13 +140,23 @@ let linkInput = document.querySelector('#bottom');
 let placeElements = document.querySelector('.elements__title');
 let linkElements = document.querySelector('.elements__image');
 
-// Открытие-закрытие Попапа
+// попап Picture
+let popupPicture = document.querySelector('#picture');
+let closePopupButtonPicture = popupPicture.querySelector('.popup__close');
 
+// закрытие попапа picture
+closePopupButtonPicture.addEventListener('click', function () {
+  popupPicture.classList.remove('popup_opened')
+
+});
+
+
+// Открытие-закрытие Попапа елементс
 openPopupButtonElements.addEventListener('click', function () {
   popupElements.classList.add('popup_opened')
   // Проставление данных из разметки в инпуты в момент открытия
-  placeInput.value = placeElements.textContent;
-  linkInput.value = linkElements.textContent;
+  //placeInput.value = placeElements.textContent;
+  //linkInput.value = linkElements.src;
 });
 
 closePopupButtonElements.addEventListener('click', function () {
@@ -132,17 +165,25 @@ closePopupButtonElements.addEventListener('click', function () {
   formElementTwo.reset()
 });
 
+
 // Обработчик «отправки» формы
 
 function formCreateHandler (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+
+    let cardItem = createCard(placeInput.value, linkInput.value);
+
+//Добавляешь на страницу
+    render(cardItem);
+
    // Получите значение полей linkInput и placeInput из свойства value
-placeInput.textContent = placeInput.value;
-linkInput.textContent = linkInput.value;
+//placeInput.textContent = placeInput.value;
+//linkInput.src = linkInput.value;
     // Выберите элементы, куда должны быть вставлены значения полей
     // Вставьте новые значения с помощью textContent
-placeElements.textContent = placeInput.value;
-linkElements.textContent = linkInput.value;
+//placeElements.textContent = placeInput.value;
+//linkElements.src = linkInput.value;
+
 // Закрытие Попапа после нажатия кнопки Сохранить
 popupElements.classList.remove('popup_opened');
 }
