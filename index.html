@@ -35,35 +35,35 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <section class="popup popup_theme_light" id="profile">
+    <section class="popup popup__edit-profile popup_theme_light">
       <div class="popup__container">
-        <button type="button" class="popup__close"></button>
-        <form name="form1" id="form1" class="popup__form">
+        <button type="button" class="popup__close popup__close-popup-edit-form"></button>
+        <form name="form1" class="popup__form popup__form-edit-profile">
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__input-container">
-            <input  class="popup__input" id="topfield" type="text" name="name" value="" maxlength="30" placeholder="Имя">
-            <input class="popup__input" id="bottomfield" type="text" name="profession" value="" maxlength="30" placeholder="Профессия">
+            <input  class="popup__input popup__input-name" type="text" name="name" value="" maxlength="30" placeholder="Имя">
+            <input class="popup__input popup__input-profession" type="text" name="profession" value="" maxlength="30" placeholder="Профессия">
           </fieldset>
           <button type="submit" class="popup__submit">Сохранить</button>
         </form>
       </div>
     </section>
-    <section class="popup popup_theme_light" id="elements">
+    <section class="popup popup__add-card popup_theme_light">
       <div class="popup__container">
-        <button type="button" class="popup__close"></button>
-        <form name="form2" id="form2" class="popup__form">
+        <button type="button" class="popup__close popup__close-popup-add-form"></button>
+        <form name="form2" class="popup__form popup__form-add-card">
           <h2 class="popup__title">Новое место</h2>
           <fieldset class="popup__input-container">
-            <input  class="popup__input" id="top" type="text" name="place" value="" maxlength="30" placeholder="Название">
-            <input class="popup__input" id="bottom" type="url" name="link" value="" maxlength="100" placeholder="Ссылка на картинку">
+            <input  class="popup__input popup__input-place" type="text" name="place" value="" maxlength="30" placeholder="Название">
+            <input class="popup__input popup__input-link" type="url" name="link" value="" maxlength="100" placeholder="Ссылка на картинку">
           </fieldset>
           <button type="submit" class="popup__submit" id="create">Создать</button>
         </form>
       </div>
     </section>
-    <section class="popup popup_theme_dark" id="picture">
+    <section class="popup popup__picture popup_theme_dark">
       <div class="popup__container-picture">
-        <button type="button" class="popup__close"></button>
+        <button type="button" class="popup__close popup__close-popup-picture"></button>
         <img class="popup__image" src="#" alt="#">
         <h2 class="popup__caption"></h2>
       </div>

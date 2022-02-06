@@ -1,4 +1,3 @@
-
 const openEditFormButton = document.querySelector('.profile__edit-button');
 const popupEditProfileForm = document.querySelector('.popup__edit-profile');
 const closeEditFormButton = document.querySelector('.popup__close-popup-edit-form');
@@ -12,16 +11,13 @@ const textOfTitleInProfile = document.querySelector('.profile__title');
 const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
 
 // Открытие-закрытие Попапа
-function openPopup (popup) {
-  popup.classList.add('popup_open');
-}
 
-openEditFormButton.addEventListener('click', () => {openPopup (popupEditProfileForm)});
-
+openEditFormButton.addEventListener('click', function () {
+  popupEditProfileForm.classList.add('popup_opened')
   // Проставление данных из разметки в инпуты в момент открытия
-  //inputNameOfEditForm.value = textOfTitleInProfile.textContent;
-  //inputProfessionOfEditForm.value = textOfSubtitleInProfile.textContent;
-
+  inputNameOfEditForm.value = textOfTitleInProfile.textContent;
+  inputProfessionOfEditForm.value = textOfSubtitleInProfile.textContent;
+});
 
 closeEditFormButton.addEventListener('click', function () {
   popupEditProfileForm.classList.remove('popup_opened')
