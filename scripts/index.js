@@ -1,6 +1,6 @@
 
 const openEditFormButton = document.querySelector('.profile__edit-button');
-const popupEditProfileForm = document.querySelector('.popup__edit-profile');
+const popupEditProfileForm = document.querySelector('.popup_type_edit-profile');
 const closeEditFormButton = document.querySelector('.popup__close-popup-edit-form');
 
 const formEditProfile = document.querySelector('.popup__form-edit-profile');
@@ -133,7 +133,7 @@ render(cardItem);
 
 // попап елементс
 const openFormAddCardButton = document.querySelector('.profile__add-button');
-const popupAddCardForm = document.querySelector('.popup__add-card');
+const popupAddCardForm = document.querySelector('.popup_type_add-card');
 const closeAddCardFormButton = popupAddCardForm.querySelector('.popup__close-popup-add-form');
 
 const formAddCard = document.querySelector('.popup__form-add-card');
@@ -145,7 +145,7 @@ const captionOfCard = document.querySelector('.elements__title');
 const imageOfCard = document.querySelector('.elements__image');
 
 // попап Picture
-const popupPicture = document.querySelector('.popup__picture');
+const popupPicture = document.querySelector('.popup_type_picture');
 const closePopupPictureButton = popupPicture.querySelector('.popup__close-popup-picture');
 
 // закрытие попапа picture
