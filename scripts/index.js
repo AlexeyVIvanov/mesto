@@ -20,13 +20,14 @@ function closePopup (popup) {
   popup.classList.remove('popup_opened');
 }
 
-openEditFormButton.addEventListener('click', () => {openPopup (popupEditProfileForm)
-
-  // Проставление данных из разметки в инпуты в момент открытия
+function openPopupProfile () {
   inputNameOfEditForm.value = textOfTitleInProfile.textContent;
   inputProfessionOfEditForm.value = textOfSubtitleInProfile.textContent;
+  openPopup (popupEditProfileForm);
+}
 
-});
+openEditFormButton.addEventListener('click', openPopupProfile);
+
 
 closeEditFormButton.addEventListener('click', () => {closePopup (popupEditProfileForm)});
 
@@ -105,7 +106,9 @@ function createCard(name, link) {
 
   // картинка
   cardImage.addEventListener('click', function () {
-    document.querySelector('.popup__image').src = link;
+    const cardOfPopupPicture = popupPicture.querySelector('.popup__image');
+    cardOfPopupPicture.src = link;
+    cardOfPopupPicture.alt = name;
     document.querySelector('.popup__caption').textContent = name;
     // открытие попапа picture
     openPopup (popupPicture);
