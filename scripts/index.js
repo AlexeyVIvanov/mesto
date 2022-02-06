@@ -13,21 +13,22 @@ const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
 
 // Открытие-закрытие Попапа
 function openPopup (popup) {
-  popup.classList.add('popup_open');
+  popup.classList.add('popup_opened');
 }
 
-openEditFormButton.addEventListener('click', () => {openPopup (popupEditProfileForm)});
+function closePopup (popup) {
+  popup.classList.remove('popup_opened');
+}
+
+openEditFormButton.addEventListener('click', () => {openPopup (popupEditProfileForm)
 
   // Проставление данных из разметки в инпуты в момент открытия
-  //inputNameOfEditForm.value = textOfTitleInProfile.textContent;
-  //inputProfessionOfEditForm.value = textOfSubtitleInProfile.textContent;
-
-
-closeEditFormButton.addEventListener('click', function () {
-  popupEditProfileForm.classList.remove('popup_opened')
-  // Сброс полей формы при закрытии
+  inputNameOfEditForm.value = textOfTitleInProfile.textContent;
+  inputProfessionOfEditForm.value = textOfSubtitleInProfile.textContent;
 
 });
+
+closeEditFormButton.addEventListener('click', () => {closePopup (popupEditProfileForm)});
 
 // Обработчик «отправки» формы
 
@@ -40,7 +41,7 @@ function submitHandlerFormEditProfile (evt) {
 textOfTitleInProfile.textContent = inputNameOfEditForm.value;
 textOfSubtitleInProfile.textContent = inputProfessionOfEditForm.value;
 // Закрытие Попапа после нажатия кнопки Сохранить
-popupEditProfileForm.classList.remove('popup_opened');
+closePopup (popupEditProfileForm);
 }
 
 // Прикрепляем обработчик к форме:
@@ -107,7 +108,7 @@ function createCard(name, link) {
     document.querySelector('.popup__image').src = link;
     document.querySelector('.popup__caption').textContent = name;
     // открытие попапа picture
-    document.querySelector('.popup__picture').classList.add('popup_opened');
+    openPopup (popupPicture);
 
   });
 
@@ -148,22 +149,13 @@ const popupPicture = document.querySelector('.popup__picture');
 const closePopupPictureButton = popupPicture.querySelector('.popup__close-popup-picture');
 
 // закрытие попапа picture
-closePopupPictureButton.addEventListener('click', function () {
-  popupPicture.classList.remove('popup_opened')
-
-});
+closePopupPictureButton.addEventListener('click', () => {closePopup (popupPicture)});
 
 
 // Открытие-закрытие Попапа елементс
-openFormAddCardButton.addEventListener('click', function () {
-  popupAddCardForm.classList.add('popup_opened')
-  // Проставление данных из разметки в инпуты в момент открытия
-  //inputNameOfPlaceOfAddForm.value = captionOfCard.textContent;
-  //inputLinkOfAddForm.value = imageOfCard.src;
-});
+openFormAddCardButton.addEventListener('click', () => {openPopup (popupAddCardForm)});
 
-closeAddCardFormButton.addEventListener('click', function () {
-  popupAddCardForm.classList.remove('popup_opened')
+closeAddCardFormButton.addEventListener('click', () => {closePopup (popupAddCardForm)
   // Сброс полей формы при закрытии
   formAddCard.reset()
 });
@@ -181,7 +173,7 @@ function submitHandlerFormAddCard (evt) {
 
   formAddCard.reset()
 // Закрытие Попапа после нажатия кнопки Сохранить
-  popupAddCardForm.classList.remove('popup_opened');
+closePopup (popupAddCardForm);
 }
 
 // Прикрепляем обработчик к форме:
