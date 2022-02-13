@@ -3,10 +3,10 @@ const openEditFormButton = document.querySelector('.profile__edit-button');
 const popupEditProfileForm = document.querySelector('.popup_type_edit-profile');
 const closeEditFormButton = document.querySelector('.popup__close-popup-edit-form');
 
-const formEditProfile = document.querySelector('.popup__form-edit-profile');
+const formEditProfile = document.forms.form1;
 
-const inputNameOfEditForm = document.querySelector('.popup__input-name');
-const inputProfessionOfEditForm = document.querySelector('.popup__input-profession');
+const inputNameOfEditForm = formEditProfile.elements.name;
+const inputProfessionOfEditForm = formEditProfile.elements.profession;
 
 const textOfTitleInProfile = document.querySelector('.profile__title');
 const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
@@ -139,10 +139,10 @@ const openFormAddCardButton = document.querySelector('.profile__add-button');
 const popupAddCardForm = document.querySelector('.popup_type_add-card');
 const closeAddCardFormButton = popupAddCardForm.querySelector('.popup__close-popup-add-form');
 
-const formAddCard = document.querySelector('.popup__form-add-card');
+const formAddCard = document.forms.form2;
 
-const inputNameOfPlaceOfAddForm = document.querySelector('.popup__input-place');
-const inputLinkOfAddForm = document.querySelector('.popup__input-link');
+const inputNameOfPlaceOfAddForm = formAddCard.elements.place;
+const inputLinkOfAddForm = formAddCard.elements.link;
 
 const captionOfCard = document.querySelector('.elements__title');
 const imageOfCard = document.querySelector('.elements__image');

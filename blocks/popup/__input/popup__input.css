@@ -11,43 +11,34 @@
   font-size: 14px;
   line-height: 17px;
   color: #000000;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
   padding: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.popup__input:last-child {
-  margin-bottom: 0;
-}
+
 
 .popup__input::placeholder {
   font-family: inherit;
-  color: #000000;
+  color: #C4C4C4;
 }
 
 .popup__input::-ms-input-placeholder {
   font-family: inherit;
-  color: #000000;
+  color: #C4C4C4;
 }
 
 .popup__input::-webkit-input-placeholder {
-  color: #000000;
+  color: #C4C4C4;
 }
 
 .popup__input::-moz-placeholder {
-  color: #000000;
+  color: #C4C4C4;
 }
 
-@media screen and (max-width: 767px) {
 
-  .popup__input {
-    font-size: 14px;
-    line-height: 17px;
-  }
-
-}
 
 
 
