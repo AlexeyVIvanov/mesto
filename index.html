@@ -41,11 +41,10 @@
         <form name="form1" class="popup__form popup__form-edit-profile" novalidate>
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__input-container">
-            <!-- удалить????? popup__input-name popup__input-profession popup__input-place popup__input-link-->
-            <input  class="popup__input popup__input-name" type="text" name="name" value="" minlength="2" maxlength="40" placeholder="Имя" required>
-            <span class="popup__input-error" ></span>
-            <input class="popup__input popup__input-profession" type="text" name="profession" value="" minlength="2" maxlength="200" placeholder="Профессия" required>
-            <span class="popup__input-error" ></span>
+            <input  class="popup__input" id="popup__input-name" type="text" name="name" value="" minlength="2" maxlength="40" placeholder="Имя" required>
+            <span class="popup__input-error popup__input-name-error"></span>
+            <input class="popup__input" id="popup__input-profession" type="text" name="profession" value="" minlength="2" maxlength="200" placeholder="Профессия" required>
+            <span class="popup__input-error popup__input-profession-error" ></span>
           </fieldset>
           <button disabled type="submit" class="popup__submit popup__submit-edit-profile popup__submit_disabled">Сохранить</button>
         </form>
@@ -57,10 +56,10 @@
         <form name="form2" class="popup__form popup__form-add-card" novalidate>
           <h2 class="popup__title">Новое место</h2>
           <fieldset class="popup__input-container">
-            <input  class="popup__input popup__input-place" type="text" name="place" value="" minlength="2" maxlength="30" placeholder="Название" required>
-            <span class="popup__input-error" ></span>
-            <input class="popup__input popup__input-link" type="url" name="link" value="" placeholder="Ссылка на картинку" required>
-            <span class="popup__input-error" ></span>
+            <input  class="popup__input" id="popup__input-place" type="text" name="place" value="" minlength="2" maxlength="30" placeholder="Название" required>
+            <span class="popup__input-error popup__input-place-error" ></span>
+            <input class="popup__input" id="popup__input-link" type="url" name="link" value="" placeholder="Ссылка на картинку" required>
+            <span class="popup__input-error popup__input-link-error" ></span>
           </fieldset>
           <button disabled type="submit" class="popup__submit popup__submit-add-card popup__submit_disabled" id="create">Создать</button>
         </form>

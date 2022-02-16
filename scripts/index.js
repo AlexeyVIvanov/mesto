@@ -11,13 +11,32 @@ const inputProfessionOfEditForm = formEditProfile.elements.profession;
 const textOfTitleInProfile = document.querySelector('.profile__title');
 const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
 
+
+// открытие попапа нажатием на оверлей
+function closePopupClickOverlay (evt) {
+  if (evt.target === document.querySelector('.popup_opened')) {
+    closePopup (document.querySelector('.popup_opened'));
+  }
+}
+
+// открытие попапа нажатием на Escape
+function closePopupKeyEscape(evt) {
+    if (evt.key === "Escape") {
+      closePopup (document.querySelector('.popup_opened'));
+    }
+}
+
 // Открытие-закрытие Попапа
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('click', closePopupClickOverlay);
+  document.addEventListener('keyup', closePopupKeyEscape);
 }
 
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('click', closePopupClickOverlay);
+  document.removeEventListener('keyup', closePopupKeyEscape);
 }
 
 function openPopupProfile () {
