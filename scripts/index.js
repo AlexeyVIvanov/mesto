@@ -11,15 +11,38 @@ const inputProfessionOfEditForm = formEditProfile.elements.profession;
 const textOfTitleInProfile = document.querySelector('.profile__title');
 const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
 
+// вставляем Template на страницу
+const template = document.querySelector('.cards').content;
+const containerForCards = document.querySelector('.elements');
 
-// открытие попапа нажатием на оверлей
+// попап елементс
+const openFormAddCardButton = document.querySelector('.profile__add-button');
+const popupAddCardForm = document.querySelector('.popup_type_add-card');
+const closeAddCardFormButton = popupAddCardForm.querySelector('.popup__close-popup-add-form');
+
+const formAddCard = document.forms.form2;
+
+const inputNameOfPlaceOfAddForm = formAddCard.elements.place;
+const inputLinkOfAddForm = formAddCard.elements.link;
+
+const captionOfCard = document.querySelector('.elements__title');
+const imageOfCard = document.querySelector('.elements__image');
+
+const buttonSubmitFormAddCard = formAddCard.querySelector('.popup__submit-add-card');
+
+// попап Picture
+const popupPicture = document.querySelector('.popup_type_picture');
+const closePopupPictureButton = popupPicture.querySelector('.popup__close-popup-picture');
+
+
+// закрытие попапа нажатием на оверлей
 function closePopupClickOverlay (evt) {
   if (evt.target === document.querySelector('.popup_opened')) {
-    closePopup (document.querySelector('.popup_opened'));
+    closePopup (evt.target);
   }
 }
 
-// открытие попапа нажатием на Escape
+// закрытие попапа нажатием на Escape
 function closePopupKeyEscape(evt) {
     if (evt.key === "Escape") {
       closePopup (document.querySelector('.popup_opened'));
@@ -29,13 +52,13 @@ function closePopupKeyEscape(evt) {
 // Открытие-закрытие Попапа
 function openPopup (popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('click', closePopupClickOverlay);
+  popup.addEventListener('click', closePopupClickOverlay);
   document.addEventListener('keyup', closePopupKeyEscape);
 }
 
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
-  document.removeEventListener('click', closePopupClickOverlay);
+  popup.removeEventListener('click', closePopupClickOverlay);
   document.removeEventListener('keyup', closePopupKeyEscape);
 }
 
@@ -54,7 +77,6 @@ closeEditFormButton.addEventListener('click', () => {closePopup (popupEditProfil
 
 function submitHandlerFormEditProfile (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-
 
     // Выберите элементы, куда должны быть вставлены значения полей
     // Вставьте новые значения с помощью textContent
@@ -97,9 +119,6 @@ const initialCards = [
   }
 ];
 
-// вставляем Template на страницу (В ТРЕНАЖЕРЕ ВНУТРИ ФУНКЦИИ)
-const template = document.querySelector('.cards').content;
-const containerForCards = document.querySelector('.elements');
 
 // создаем карточки
 function createCard(name, link) {
@@ -153,29 +172,18 @@ render(cardItem);
 });
 
 
-// попап елементс
-const openFormAddCardButton = document.querySelector('.profile__add-button');
-const popupAddCardForm = document.querySelector('.popup_type_add-card');
-const closeAddCardFormButton = popupAddCardForm.querySelector('.popup__close-popup-add-form');
-
-const formAddCard = document.forms.form2;
-
-const inputNameOfPlaceOfAddForm = formAddCard.elements.place;
-const inputLinkOfAddForm = formAddCard.elements.link;
-
-const captionOfCard = document.querySelector('.elements__title');
-const imageOfCard = document.querySelector('.elements__image');
-
-// попап Picture
-const popupPicture = document.querySelector('.popup_type_picture');
-const closePopupPictureButton = popupPicture.querySelector('.popup__close-popup-picture');
-
 // закрытие попапа picture
 closePopupPictureButton.addEventListener('click', () => {closePopup (popupPicture)});
 
+// функция деактивирования кнопки сабмита при открытии попапа
+function openformAddCard () {
+  buttonSubmitFormAddCard.setAttribute('disabled', true);
+  buttonSubmitFormAddCard.classList.add('popup__submit_disabled');
+  openPopup(popupAddCardForm);
+}
 
 // Открытие-закрытие Попапа елементс
-openFormAddCardButton.addEventListener('click', () => {openPopup (popupAddCardForm)});
+openFormAddCardButton.addEventListener('click', () => {openformAddCard (popupAddCardForm)});
 
 closeAddCardFormButton.addEventListener('click', () => {closePopup (popupAddCardForm)
   // Сброс полей формы при закрытии
@@ -194,8 +202,9 @@ function submitHandlerFormAddCard (evt) {
   render(cardItem);
 
   formAddCard.reset()
+
 // Закрытие Попапа после нажатия кнопки Сохранить
-closePopup (popupAddCardForm);
+  closePopup (popupAddCardForm);
 }
 
 // Прикрепляем обработчик к форме:
