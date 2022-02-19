@@ -14,6 +14,7 @@ const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
 // вставляем Template на страницу
 const template = document.querySelector('.cards').content;
 const containerForCards = document.querySelector('.elements');
+const containerForCaptionAndLike = document.querySelector('.popup__caption')
 
 // попап елементс
 const openFormAddCardButton = document.querySelector('.profile__add-button');
@@ -144,10 +145,9 @@ function createCard(name, link) {
 
   // картинка
   cardImage.addEventListener('click', function () {
-
     cardOfPopupPicture.src = link;
     cardOfPopupPicture.alt = name;
-    document.querySelector('.popup__caption').textContent = name;
+    containerForCaptionAndLike.textContent = name;
     // открытие попапа picture
     openPopup (popupPicture);
 
