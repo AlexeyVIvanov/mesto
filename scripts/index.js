@@ -33,7 +33,7 @@ const buttonSubmitFormAddCard = formAddCard.querySelector('.popup__submit-add-ca
 // попап Picture
 const popupPicture = document.querySelector('.popup_type_picture');
 const closePopupPictureButton = popupPicture.querySelector('.popup__close-popup-picture');
-
+const cardOfPopupPicture = popupPicture.querySelector('.popup__image');
 
 // закрытие попапа нажатием на оверлей
 function closePopupClickOverlay (evt) {
@@ -144,7 +144,7 @@ function createCard(name, link) {
 
   // картинка
   cardImage.addEventListener('click', function () {
-    const cardOfPopupPicture = popupPicture.querySelector('.popup__image');
+
     cardOfPopupPicture.src = link;
     cardOfPopupPicture.alt = name;
     document.querySelector('.popup__caption').textContent = name;
