@@ -14,7 +14,7 @@ const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
 // вставляем Template на страницу
 const template = document.querySelector('.cards').content;
 const containerForCards = document.querySelector('.elements');
-const containerForCaptionAndLike = document.querySelector('.popup__caption')
+const containerForCaptionAndLike = document.querySelector('.popup__caption');
 
 // попап елементс
 const openFormAddCardButton = document.querySelector('.profile__add-button');
