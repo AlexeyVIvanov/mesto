@@ -1,3 +1,5 @@
+import {FormValidator} from './FormValidator.js';
+import {Card} from './Card.js';
 
 const openEditFormButton = document.querySelector('.profile__edit-button');
 const popupEditProfileForm = document.querySelector('.popup_type_edit-profile');
@@ -36,6 +38,23 @@ const popupPicture = document.querySelector('.popup_type_picture');
 const closePopupPictureButton = popupPicture.querySelector('.popup__close-popup-picture');
 const cardOfPopupPicture = popupPicture.querySelector('.popup__image');
 
+// валидация
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+};
+
+const formEditProfileValidate = new FormValidator(validationConfig, formEditProfile);
+const formAddCardValidate = new FormValidator(validationConfig, formAddCard);
+
+formEditProfileValidate.enableValidation();
+formAddCardValidate.enableValidation();
+
+
 // закрытие попапа нажатием на оверлей
 function closePopupClickOverlay (evt) {
   if (evt.target === document.querySelector('.popup_opened')) {
@@ -71,14 +90,11 @@ function openPopupProfile () {
 
 openEditFormButton.addEventListener('click', openPopupProfile);
 
-
 closeEditFormButton.addEventListener('click', () => {closePopup (popupEditProfileForm)});
 
 // Обработчик «отправки» формы
-
 function submitHandlerFormEditProfile (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-
+    evt.preventDefault();
     // Выберите элементы, куда должны быть вставлены значения полей
     // Вставьте новые значения с помощью textContent
 textOfTitleInProfile.textContent = inputNameOfEditForm.value;
@@ -86,7 +102,6 @@ textOfSubtitleInProfile.textContent = inputProfessionOfEditForm.value;
 // Закрытие Попапа после нажатия кнопки Сохранить
 closePopup (popupEditProfileForm);
 }
-
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formEditProfile.addEventListener('submit', submitHandlerFormEditProfile);
@@ -120,60 +135,35 @@ const initialCards = [
   }
 ];
 
-
-// создаем карточки
-function createCard(name, link) {
-  // клонируем содержимое тега template
-  const card = template.querySelector('.elements__item').cloneNode(true);
-  // наполняем содержимым
-  card.querySelector('.elements__title').textContent = name;
-  const cardImage = card.querySelector('.elements__image');
-  cardImage.src = link;
-  cardImage.alt = name;
-
-  // лайки
-  card.querySelector('.elements__like').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('elements__like_active');
-
-  });
-
-  // корзина
-  card.querySelector('.elements__trash').addEventListener('click', function (evt) {
-    evt.target.closest('.elements__item').remove();
-
-  });
-
-  // картинка
-  cardImage.addEventListener('click', function () {
-    cardOfPopupPicture.src = link;
-    cardOfPopupPicture.alt = name;
-    containerForCaptionAndLike.textContent = name;
-    // открытие попапа picture
-    openPopup (popupPicture);
-
-  });
-
-  return card;
+//открытие попапа picture
+function openPopupPicture() {
+  cardOfPopupPicture.src = this._link;
+  cardOfPopupPicture.alt = this._name;
+  containerForCaptionAndLike.textContent = this._name;
+  // открытие попапа picture
+  openPopup (popupPicture);
 }
 
-function render(card) {
+// закрытие попапа picture
+closePopupPictureButton.addEventListener('click', () => {closePopup (popupPicture)});
+
+// рэндерим карточки
+function render(data) {
+  // Создадим экземпляр карточки
+  const card = new Card(data, '.cards', openPopupPicture);
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
   // отображаем на странице карточки
-  containerForCards.prepend(card);
+  containerForCards.prepend(cardElement);
 
 }
 
 // перебираем массив
 const initialCardsRevers = initialCards.reverse();
-initialCardsRevers.forEach(function(item) {
-const cardItem = createCard(item.name, item.link);
-
-render(cardItem);
+initialCardsRevers.forEach(function(data) {
+render(data);
 
 });
-
-
-// закрытие попапа picture
-closePopupPictureButton.addEventListener('click', () => {closePopup (popupPicture)});
 
 // функция деактивирования кнопки сабмита при открытии попапа
 function openformAddCard () {
@@ -190,24 +180,20 @@ closeAddCardFormButton.addEventListener('click', () => {closePopup (popupAddCard
   formAddCard.reset()
 });
 
-
 // Обработчик «отправки» формы
-
 function submitHandlerFormAddCard (evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-
-  const cardItem = createCard(inputNameOfPlaceOfAddForm.value, inputLinkOfAddForm.value);
-
-//Добавляешь на страницу
-  render(cardItem);
+  evt.preventDefault();
+  //Добавляем на страницу
+  render({
+    name: inputNameOfPlaceOfAddForm.value,
+    link: inputLinkOfAddForm.value
+  });
 
   formAddCard.reset()
 
 // Закрытие Попапа после нажатия кнопки Сохранить
   closePopup (popupAddCardForm);
 }
-
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formAddCard.addEventListener('submit', submitHandlerFormAddCard);
-
