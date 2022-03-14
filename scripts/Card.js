@@ -32,12 +32,21 @@ export class Card {
     this._setEventListenersInCard();
 
     // Добавим данные
-    this._element.querySelector('.elements__image').src = this._link;
-    this._element.querySelector('.elements__image').alt = this._name;
+    const cardImage = this._element.querySelector('.elements__image');
+    cardImage.src = this._link;
+    cardImage.alt = this._name;
     this._element.querySelector('.elements__title').textContent = this._name;
 
     // Вернём элемент наружу
     return this._element;
+  }
+
+  _handleLikeActivated = (evt) => {
+    evt.target.classList.toggle('elements__like_active');
+  }
+
+  _handleDeleteCard = () => {
+    this._element.remove();
   }
 
 
@@ -45,16 +54,10 @@ export class Card {
   _setEventListenersInCard() {
 
     // лайки
-    this._element.querySelector('.elements__like').addEventListener('click', (evt) => {
-    evt.target.classList.toggle('elements__like_active');
-
-    });
+    this._element.querySelector('.elements__like').addEventListener('click', this._handleLikeActivated);
 
     // корзина
-    this._element.querySelector('.elements__trash').addEventListener('click', (evt) => {
-    evt.target.closest('.elements__item').remove();
-
-    });
+    this._element.querySelector('.elements__trash').addEventListener('click', this._handleDeleteCard);
 
     // картинка
     this._element.querySelector('.elements__image').addEventListener('click', () => {

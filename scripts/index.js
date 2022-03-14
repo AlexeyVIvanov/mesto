@@ -1,5 +1,8 @@
 import {FormValidator} from './FormValidator.js';
+
 import {Card} from './Card.js';
+
+import {initialCards} from './initial.js';
 
 const openEditFormButton = document.querySelector('.profile__edit-button');
 const popupEditProfileForm = document.querySelector('.popup_type_edit-profile');
@@ -14,7 +17,6 @@ const textOfTitleInProfile = document.querySelector('.profile__title');
 const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
 
 // вставляем Template на страницу
-const template = document.querySelector('.cards').content;
 const containerForCards = document.querySelector('.elements');
 const containerForCaptionAndLike = document.querySelector('.popup__caption');
 
@@ -27,9 +29,6 @@ const formAddCard = document.forms.form2;
 
 const inputNameOfPlaceOfAddForm = formAddCard.elements.place;
 const inputLinkOfAddForm = formAddCard.elements.link;
-
-const captionOfCard = document.querySelector('.elements__title');
-const imageOfCard = document.querySelector('.elements__image');
 
 const buttonSubmitFormAddCard = formAddCard.querySelector('.popup__submit-add-card');
 
@@ -86,6 +85,8 @@ function openPopupProfile () {
   inputNameOfEditForm.value = textOfTitleInProfile.textContent;
   inputProfessionOfEditForm.value = textOfSubtitleInProfile.textContent;
   openPopup (popupEditProfileForm);
+  formEditProfileValidate.resetErrors();
+  formEditProfileValidate.toggleButtonState();
 }
 
 openEditFormButton.addEventListener('click', openPopupProfile);
@@ -107,33 +108,6 @@ closePopup (popupEditProfileForm);
 formEditProfile.addEventListener('submit', submitHandlerFormEditProfile);
 
 // PROJECT 5
-// Карточки для загрузки страницы
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 
 //открытие попапа picture
 function openPopupPicture() {
@@ -147,22 +121,25 @@ function openPopupPicture() {
 // закрытие попапа picture
 closePopupPictureButton.addEventListener('click', () => {closePopup (popupPicture)});
 
-// рэндерим карточки
-function render(data) {
+function render(card) {
+  // отображаем на странице карточки
+  containerForCards.prepend(card);
+}
+
+function createCard(data) {
   // Создадим экземпляр карточки
   const card = new Card(data, '.cards', openPopupPicture);
   // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();
-  // отображаем на странице карточки
-  containerForCards.prepend(cardElement);
+  const cardItem = card.generateCard();
 
+  return cardItem;
 }
 
 // перебираем массив
 const initialCardsRevers = initialCards.reverse();
 initialCardsRevers.forEach(function(data) {
-render(data);
-
+  const cardItem = createCard(data);
+  render(cardItem);
 });
 
 // функция деактивирования кнопки сабмита при открытии попапа
@@ -184,12 +161,12 @@ closeAddCardFormButton.addEventListener('click', () => {closePopup (popupAddCard
 function submitHandlerFormAddCard (evt) {
   evt.preventDefault();
   //Добавляем на страницу
-  render({
+  const cardItem = createCard({
     name: inputNameOfPlaceOfAddForm.value,
     link: inputLinkOfAddForm.value
   });
-
-  formAddCard.reset()
+  render(cardItem);
+  formAddCard.reset();
 
 // Закрытие Попапа после нажатия кнопки Сохранить
   closePopup (popupAddCardForm);

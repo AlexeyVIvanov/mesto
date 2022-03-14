@@ -7,3 +7,7 @@
   border-top-right-radius: 10px;
   object-fit: cover;
 }
+
+.elements__image:hover {
+  cursor: pointer;
+}
