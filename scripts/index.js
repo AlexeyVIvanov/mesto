@@ -4,7 +4,17 @@ import {Card} from './Card.js';
 
 import {initialCards} from './initial.js';
 
-const openEditFormButton = document.querySelector('.profile__edit-button');
+import {Section} from './Section.js';
+
+import {Popup} from './Popup.js';
+
+import {PopupWithImage} from './PopupWithImage.js';
+
+import {PopupWithForm} from './PopupWithForm.js';
+
+import {UserInfo} from './UserInfo.js';
+
+export const openEditFormButton = document.querySelector('.profile__edit-button');
 const popupEditProfileForm = document.querySelector('.popup_type_edit-profile');
 const closeEditFormButton = document.querySelector('.popup__close-popup-edit-form');
 
@@ -13,15 +23,15 @@ const formEditProfile = document.forms.form1;
 const inputNameOfEditForm = formEditProfile.elements.name;
 const inputProfessionOfEditForm = formEditProfile.elements.profession;
 
-const textOfTitleInProfile = document.querySelector('.profile__title');
-const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
+ const textOfTitleInProfile = document.querySelector('.profile__title');
+ const textOfSubtitleInProfile = document.querySelector('.profile__subtitle');
 
 // вставляем Template на страницу
 const containerForCards = document.querySelector('.elements');
 const containerForCaptionAndLike = document.querySelector('.popup__caption');
 
 // попап елементс
-const openFormAddCardButton = document.querySelector('.profile__add-button');
+export const openFormAddCardButton = document.querySelector('.profile__add-button');
 const popupAddCardForm = document.querySelector('.popup_type_add-card');
 const closeAddCardFormButton = popupAddCardForm.querySelector('.popup__close-popup-add-form');
 
@@ -54,123 +64,149 @@ formEditProfileValidate.enableValidation();
 formAddCardValidate.enableValidation();
 
 
-// закрытие попапа нажатием на оверлей
-function closePopupClickOverlay (evt) {
-  if (evt.target === document.querySelector('.popup_opened')) {
-    closePopup (evt.target);
-  }
-}
-
-// закрытие попапа нажатием на Escape
-function closePopupKeyEscape(evt) {
-    if (evt.key === "Escape") {
-      closePopup (document.querySelector('.popup_opened'));
-    }
-}
-
-// Открытие-закрытие Попапа
-function openPopup (popup) {
-  popup.classList.add('popup_opened');
-  popup.addEventListener('click', closePopupClickOverlay);
-  document.addEventListener('keyup', closePopupKeyEscape);
-}
-
-function closePopup (popup) {
-  popup.classList.remove('popup_opened');
-  popup.removeEventListener('click', closePopupClickOverlay);
-  document.removeEventListener('keyup', closePopupKeyEscape);
-}
-
-function openPopupProfile () {
-  inputNameOfEditForm.value = textOfTitleInProfile.textContent;
-  inputProfessionOfEditForm.value = textOfSubtitleInProfile.textContent;
-  openPopup (popupEditProfileForm);
-  formEditProfileValidate.resetErrors();
-  formEditProfileValidate.toggleButtonState();
-}
-
-openEditFormButton.addEventListener('click', openPopupProfile);
-
-closeEditFormButton.addEventListener('click', () => {closePopup (popupEditProfileForm)});
-
 // Обработчик «отправки» формы
-function submitHandlerFormEditProfile (evt) {
-    evt.preventDefault();
+function submitHandlerFormEditProfile (data) {
+  const {name, description} = data;
+  console.log('data', data)
     // Выберите элементы, куда должны быть вставлены значения полей
     // Вставьте новые значения с помощью textContent
-textOfTitleInProfile.textContent = inputNameOfEditForm.value;
-textOfSubtitleInProfile.textContent = inputProfessionOfEditForm.value;
+//textOfTitleInProfile.textContent = inputNameOfEditForm.value;
+//textOfSubtitleInProfile.textContent = inputProfessionOfEditForm.value;
+userInfo.setUserInfo(name, description);
 // Закрытие Попапа после нажатия кнопки Сохранить
-closePopup (popupEditProfileForm);
+popupWithFormEditProfile.close();
 }
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-formEditProfile.addEventListener('submit', submitHandlerFormEditProfile);
+
+
+// форма edit profile
+const popupWithFormEditProfile = new PopupWithForm('.popup_type_edit-profile', () => {
+  submitHandlerFormEditProfile
+// {
+//  submitHandlerForm: (valuesInput) => {
+
+//  this._getInputValues();
+
+//  const profileNew = [
+//    {
+//      name: inputNameOfEditForm.value,
+//      link: inputProfessionOfEditForm.value
+//    }
+//  ];
+//  cardsList.addItem(createCard(cardItem));
+//  }
+//}
+});
+
+
+openEditFormButton.addEventListener('click', () => {
+  const {name, job} = userInfo.getUserInfo();
+  popupWithFormEditProfile.open();
+
+  inputNameOfEditForm.value = name;
+  inputProfessionOfEditForm.value = job;
+
+  popupWithFormEditProfile.setEventListeners();
+
+  formEditProfileValidate.resetErrors();
+  formEditProfileValidate.toggleButtonState();
+});
+
+
+
+// форма add-card
+const popupWithFormAddCard = new PopupWithForm('.popup_type_add-card', () => {
+  submitHandlerFormAddCard
+//{
+//  submitHandlerForm: (valuesInput) => {
+
+//  this._getInputValues();
+
+//  const profileNew = [
+//    {
+//      name: inputNameOfEditForm.value,
+ //     link: inputProfessionOfEditForm.value
+//    }
+ // ];
+ // cardsList.addItem(createCard(cardItem));
+ // }
+//}
+});
+
+
+openFormAddCardButton.addEventListener('click', () => {
+  popupWithFormAddCard.open();
+  popupWithFormAddCard.setEventListeners();
+});
 
 // PROJECT 5
 
+const popupWithImage = new PopupWithImage('.popup_type_picture');
+
+
 //открытие попапа picture
-function openPopupPicture() {
-  cardOfPopupPicture.src = this._link;
-  cardOfPopupPicture.alt = this._name;
-  containerForCaptionAndLike.textContent = this._name;
-  // открытие попапа picture
-  openPopup (popupPicture);
+function openPopupPicture(name, link) {
+
+  popupWithImage.open(name, link);
+  popupWithImage.setEventListeners();
 }
 
-// закрытие попапа picture
-closePopupPictureButton.addEventListener('click', () => {closePopup (popupPicture)});
-
-function render(card) {
-  // отображаем на странице карточки
-  containerForCards.prepend(card);
-}
 
 function createCard(data) {
   // Создадим экземпляр карточки
   const card = new Card(data, '.cards', openPopupPicture);
+
   // Создаём карточку и возвращаем наружу
   const cardItem = card.generateCard();
 
   return cardItem;
 }
 
-// перебираем массив
-const initialCardsRevers = initialCards.reverse();
-initialCardsRevers.forEach(function(data) {
-  const cardItem = createCard(data);
-  render(cardItem);
-});
+// создаем Section
+const cardsList = new Section({
+  data: initialCards,
+  renderer: (cardItem) => {
+    const card = createCard(cardItem);
+    cardsList.addItem(card);
+
+  },
+},
+    '.elements'
+);
+
+cardsList.renderItems();
 
 // функция деактивирования кнопки сабмита при открытии попапа
-function openformAddCard () {
-  buttonSubmitFormAddCard.setAttribute('disabled', true);
-  buttonSubmitFormAddCard.classList.add('popup__submit_disabled');
-  openPopup(popupAddCardForm);
-}
+//function openformAddCard () {
+//  buttonSubmitFormAddCard.setAttribute('disabled', true);
+//  buttonSubmitFormAddCard.classList.add('popup__submit_disabled');
+//  openPopup(popupAddCardForm);
+//}
 
-// Открытие-закрытие Попапа елементс
-openFormAddCardButton.addEventListener('click', () => {openformAddCard (popupAddCardForm)});
 
-closeAddCardFormButton.addEventListener('click', () => {closePopup (popupAddCardForm)
-  // Сброс полей формы при закрытии
-  formAddCard.reset()
-});
 
 // Обработчик «отправки» формы
-function submitHandlerFormAddCard (evt) {
-  evt.preventDefault();
+const submitHandlerFormAddCard = (data) => {
+  console.log('data', data)
+  //evt.preventDefault();
   //Добавляем на страницу
-  const cardItem = createCard({
-    name: inputNameOfPlaceOfAddForm.value,
-    link: inputLinkOfAddForm.value
-  });
-  render(cardItem);
-  formAddCard.reset();
+  const cardItem = createCard(data
+    //{
+    //name: inputNameOfPlaceOfAddForm.value,
+    //link: inputLinkOfAddForm.value
+  //}
+  );
+  //render(cardItem);
+  cardsList.addItem(cardItem);
+  //formAddCard.reset();
 
 // Закрытие Попапа после нажатия кнопки Сохранить
-  closePopup (popupAddCardForm);
+  popupWithFormAddCard.close();
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formAddCard.addEventListener('submit', submitHandlerFormAddCard);
+//formAddCard.addEventListener('submit', submitHandlerFormAddCard);
+
+const userInfo = new UserInfo({
+  userNameInfoSelector: '.profile__title',
+  userJobInfoSelector: '.profile__subtitle'
+});
