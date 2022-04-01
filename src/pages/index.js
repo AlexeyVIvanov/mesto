@@ -1,16 +1,16 @@
-import './pages/index.css';
+import './index.css';
 
-import {FormValidator} from './components/FormValidator.js';
+import {FormValidator} from '../components/FormValidator.js';
 
-import {Card} from './components/Card.js';
+import {Card} from '../components/Card.js';
 
-import {Section} from './components/Section.js';
+import {Section} from '../components/Section.js';
 
-import {PopupWithImage} from './components/PopupWithImage.js';
+import {PopupWithImage} from '../components/PopupWithImage.js';
 
-import {PopupWithForm} from './components/PopupWithForm.js';
+import {PopupWithForm} from '../components/PopupWithForm.js';
 
-import {UserInfo} from './components/UserInfo.js';
+import {UserInfo} from '../components/UserInfo.js';
 
 import {
   openEditFormButton,
@@ -22,7 +22,7 @@ import {
   buttonSubmitFormAddCard,
   initialCardsRevers,
   validationConfig
-} from './utils/constants.js';
+} from '../utils/constants.js';
 
 
 // валидация
@@ -77,8 +77,7 @@ const popupWithFormAddCard = new PopupWithForm('.popup_type_add-card', {
 });
 
 openFormAddCardButton.addEventListener('click', () => {
-  buttonSubmitFormAddCard.setAttribute('disabled', true);
-  buttonSubmitFormAddCard.classList.add('popup__submit_disabled');
+  formAddCardValidate.toggleButtonState();
   popupWithFormAddCard.open();
 
 });
@@ -92,8 +91,9 @@ const popupWithImage = new PopupWithImage('.popup_type_picture');
 function openPopupPicture(name, link) {
 
   popupWithImage.open(name, link);
-  popupWithImage.setEventListeners();
 }
+
+popupWithImage.setEventListeners();
 
 function createCard(data) {
   // Создадим экземпляр карточки
