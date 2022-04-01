@@ -1,14 +1,16 @@
-import {FormValidator} from '../components/FormValidator.js';
+import './pages/index.css';
 
-import {Card} from '../components/Card.js';
+import {FormValidator} from './components/FormValidator.js';
 
-import {Section} from '../components/Section.js';
+import {Card} from './components/Card.js';
 
-import {PopupWithImage} from '../components/PopupWithImage.js';
+import {Section} from './components/Section.js';
 
-import {PopupWithForm} from '../components/PopupWithForm.js';
+import {PopupWithImage} from './components/PopupWithImage.js';
 
-import {UserInfo} from '../components/UserInfo.js';
+import {PopupWithForm} from './components/PopupWithForm.js';
+
+import {UserInfo} from './components/UserInfo.js';
 
 import {
   openEditFormButton,
@@ -20,7 +22,7 @@ import {
   buttonSubmitFormAddCard,
   initialCardsRevers,
   validationConfig
-} from '../utils/constants.js';
+} from './utils/constants.js';
 
 
 // валидация
