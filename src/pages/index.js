@@ -12,37 +12,75 @@ import {PopupWithForm} from '../components/PopupWithForm.js';
 
 import {UserInfo} from '../components/UserInfo.js';
 
+import {api} from '../components/Api.js'
+
 import {
   openEditFormButton,
+  openUpdateAvatarForm,
   formEditProfile,
   inputNameOfEditForm,
   inputProfessionOfEditForm,
   openFormAddCardButton,
   formAddCard,
   buttonSubmitFormAddCard,
-  initialCardsRevers,
+  formUpdateAvatar,
   validationConfig
 } from '../utils/constants.js';
+
+let userId;
+
+api.getProfile()
+  .then(res => {
+
+    userInfo.setUserInfo(res.name, res.about, res.avatar);
+
+    userId = res._id;
+  })
+
+api.getInitialCards()
+  .then(listOfCards => {
+
+    listOfCards.forEach(data => {
+
+    const cardItem = createCard({
+      name: data.name,
+      link: data.link,
+      likes: data.likes,
+      userId: userId,
+      ownerId: data.owner._id,
+      id: data._id
+    });
+
+    cardsList.addItem(cardItem)
+  })
+})
 
 
 // валидация
 const formEditProfileValidate = new FormValidator(validationConfig, formEditProfile);
 const formAddCardValidate = new FormValidator(validationConfig, formAddCard);
+const formUpdateAvatarValidate = new FormValidator(validationConfig, formUpdateAvatar);
 
 formEditProfileValidate.enableValidation();
 formAddCardValidate.enableValidation();
+formUpdateAvatarValidate.enableValidation();
 
 //  userInfo
 const userInfo = new UserInfo({
   userNameInfoSelector: '.profile__title',
-  userJobInfoSelector: '.profile__subtitle'
+  userJobInfoSelector: '.profile__subtitle',
+  userAvatarSelector: '.profile__avatar'
 });
 
 // форма edit profile
 const popupWithFormEditProfile = new PopupWithForm('.popup_type_edit-profile', {
   submitHandlerForm: (valuesInput) => {
-    userInfo.setUserInfo(valuesInput.name, valuesInput.profession);
 
+    api.editProfile(valuesInput.name, valuesInput.profession)
+      .then(res => {
+
+        userInfo.setUserInfo(res.name, res.about, res.avatar);
+      })
   }
 
 });
@@ -65,12 +103,19 @@ popupWithFormEditProfile.setEventListeners();
 const popupWithFormAddCard = new PopupWithForm('.popup_type_add-card', {
   submitHandlerForm: (valuesInput) => {
 
-    const cardItem = createCard({
-      name: valuesInput.place,
-      link: valuesInput.link
-    });
+    api.addCard(valuesInput.place, valuesInput.link)
+      .then(res => {
 
-    cardsList.addItem(cardItem);
+        const cardItem = createCard({
+          name: res.name,
+          link: res.link,
+          likes: res.likes,
+          userId: userId,
+          ownerId: res.owner._id,
+          id: res._id
+        });
+        cardsList.addItem(cardItem);
+      })
 
   }
 
@@ -97,7 +142,39 @@ popupWithImage.setEventListeners();
 
 function createCard(data) {
   // Создадим экземпляр карточки
-  const card = new Card(data, '.cards', openPopupPicture);
+  const card = new Card(
+    data,
+    '.cards',
+    openPopupPicture,
+    (id) => {
+
+      cardConfirmDelete.open();
+      cardConfirmDelete.changeSubmitHandler(() => {
+        api.deleteConfirmCard(id)
+        .then(res => {
+          card.handleDeleteCard()
+          cardConfirmDelete.close()
+        })
+      })
+
+    },
+    (id) => {
+
+      if(card.isLiked()) {
+
+        api.deleteLikes(id)
+        .then(res => {
+        card.setLikes(res.likes)
+      })
+
+      } else {
+          api.addLikes(id)
+          .then(res => {
+          card.setLikes(res.likes)
+          })
+      }
+
+    })
 
   // Создаём карточку и возвращаем наружу
   const cardItem = card.generateCard();
@@ -107,7 +184,7 @@ function createCard(data) {
 
 // создаем Section
 const cardsList = new Section({
-  data: initialCardsRevers,
+  data: [],
   renderer: (cardItem) => {
     const card = createCard(cardItem);
     cardsList.addItem(card);
@@ -118,3 +195,32 @@ const cardsList = new Section({
 );
 
 cardsList.renderItems();
+
+const cardConfirmDelete = new PopupWithForm('.popup_type_delete-confirm', {
+  submitHandlerForm: () => {
+  api.deleteConfirmCard(id)
+  }
+});
+
+cardConfirmDelete.setEventListeners();
+
+const updateUserAvatar = new PopupWithForm('.popup_type_update-avatar', {
+  submitHandlerForm: (valuesInput) => {
+    api.updateAvatar(valuesInput.avatar)
+      .then(res => {
+
+        userInfo.setUserInfo(res.name, res.about, res.avatar);
+
+      })
+  }
+});
+
+updateUserAvatar.setEventListeners();
+
+openUpdateAvatarForm.addEventListener('click', () => {
+  updateUserAvatar.open();
+  formUpdateAvatarValidate.toggleButtonState();
+
+})
+
+

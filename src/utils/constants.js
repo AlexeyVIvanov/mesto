@@ -1,6 +1,7 @@
-import {initialCards} from './initial.js'
 
 const openEditFormButton = document.querySelector('.profile__edit-button');
+
+const openUpdateAvatarForm = document.querySelector('.profile__avatar')
 
 const formEditProfile = document.forms.form1;
 
@@ -14,7 +15,7 @@ const formAddCard = document.forms.form2;
 
 const buttonSubmitFormAddCard = formAddCard.querySelector('.popup__submit-add-card');
 
-const initialCardsRevers = initialCards.reverse();
+const formUpdateAvatar = document.forms.form4;
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -27,12 +28,13 @@ const validationConfig = {
 
 export {
   openEditFormButton,
+  openUpdateAvatarForm,
   formEditProfile,
   inputNameOfEditForm,
   inputProfessionOfEditForm,
   openFormAddCardButton,
   formAddCard,
   buttonSubmitFormAddCard,
-  initialCardsRevers,
+  formUpdateAvatar,
   validationConfig
 }
