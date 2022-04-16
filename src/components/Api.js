@@ -4,16 +4,6 @@ class Api {
     this._headers = headers;
     this._baseUrl = baseUrl;
 
-    this._form = document.querySelector('.popup__form');
-    this._buttonElement = this._form.querySelector('.popup__submit');
-
-  }
-
-  _renderLoading(isLoading) {
-    if(isLoading) {
-      this._buttonElement.innerText = 'Сохранение...'
-    }
-
   }
 
   getProfile() {
@@ -27,9 +17,6 @@ class Api {
       // если ошибка, отклоняем промис
       return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
 
   }
 
@@ -44,14 +31,11 @@ class Api {
       // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
 
   }
 
   editProfile(name, about) {
-    this._renderLoading(true);
+
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -67,17 +51,11 @@ class Api {
       // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-    })
-    .finally(() => {
-    this._renderLoading(false);
-    })
 
   }
 
   addCard(name, link) {
-    this._renderLoading(true);
+
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -92,12 +70,6 @@ class Api {
       }
       // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-    })
-    .finally(() => {
-    this._renderLoading(false);
     })
 
   }
@@ -114,9 +86,6 @@ class Api {
       // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
 
   }
 
@@ -132,9 +101,6 @@ class Api {
       // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-    });
 
   }
 
@@ -150,14 +116,11 @@ class Api {
       // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-    });
 
   }
 
   updateAvatar(avatar) {
-    this._renderLoading(true);
+
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -171,12 +134,6 @@ class Api {
       }
       // если ошибка, отклоняем промис
     return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-    })
-    .finally(() => {
-    this._renderLoading(false);
     })
 
   }

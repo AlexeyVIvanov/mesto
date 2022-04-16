@@ -13,8 +13,6 @@ const openFormAddCardButton = document.querySelector('.profile__add-button');
 
 const formAddCard = document.forms.form2;
 
-const buttonSubmitFormAddCard = formAddCard.querySelector('.popup__submit-add-card');
-
 const formUpdateAvatar = document.forms.form4;
 
 const validationConfig = {
@@ -34,7 +32,6 @@ export {
   inputProfessionOfEditForm,
   openFormAddCardButton,
   formAddCard,
-  buttonSubmitFormAddCard,
   formUpdateAvatar,
   validationConfig
 }

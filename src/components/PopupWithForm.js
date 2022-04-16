@@ -6,10 +6,16 @@ export class PopupWithForm extends Popup {
     this._submitHandlerForm = submitHandlerForm;
 
     this._form = this._popup.querySelector('.popup__form');
+    this._button = this._form.querySelector('.popup__submit');
 
     this._inputList = [...this._form.querySelectorAll('.popup__input')];
 
   }
+
+  changeTextOfButton(text) {
+    this._button.innerText = text;
+  }
+
   //собирает данные всех полей формы.
 
   // И потом передать  _getInputValues()  передать в колбэк, чтобы мог
@@ -38,8 +44,6 @@ export class PopupWithForm extends Popup {
       evt.preventDefault();
 
       this._submitHandlerForm(this._getInputValues());
-
-      this.close();
 
     });
 

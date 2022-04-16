@@ -22,38 +22,42 @@ import {
   inputProfessionOfEditForm,
   openFormAddCardButton,
   formAddCard,
-  buttonSubmitFormAddCard,
   formUpdateAvatar,
   validationConfig
 } from '../utils/constants.js';
 
+
 let userId;
 
-api.getProfile()
-  .then(res => {
+Promise.all ([
+  api.getProfile(),
+  api.getInitialCards()
+])
+  .then((res) => {
 
-    userInfo.setUserInfo(res.name, res.about, res.avatar);
+    userInfo.setUserInfo(res[0].name, res[0].about, res[0].avatar);
 
-    userId = res._id;
+    userId = res[0]._id;
+
+    cardsList.renderItems(
+      { data: res[1],
+        renderer: (res) => {
+          const cardItem = createCard({
+          name: res.name,
+          link: res.link,
+          likes: res.likes,
+          userId: userId,
+          ownerId: res.owner._id,
+          id: res._id
+        });
+        cardsList.addItem(cardItem);
+        }
+      }
+    )
   })
-
-api.getInitialCards()
-  .then(listOfCards => {
-
-    listOfCards.forEach(data => {
-
-    const cardItem = createCard({
-      name: data.name,
-      link: data.link,
-      likes: data.likes,
-      userId: userId,
-      ownerId: data.owner._id,
-      id: data._id
-    });
-
-    cardsList.addItem(cardItem)
-  })
-})
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 
 
 // валидация
@@ -75,11 +79,22 @@ const userInfo = new UserInfo({
 // форма edit profile
 const popupWithFormEditProfile = new PopupWithForm('.popup_type_edit-profile', {
   submitHandlerForm: (valuesInput) => {
+    popupWithFormEditProfile.changeTextOfButton('Сохранение...')
 
     api.editProfile(valuesInput.name, valuesInput.profession)
       .then(res => {
 
         userInfo.setUserInfo(res.name, res.about, res.avatar);
+      })
+      .then(() => {
+        popupWithFormEditProfile.close()
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      })
+      .finally(() => {
+        popupWithFormEditProfile.changeTextOfButton('Сохранить')
+
       })
   }
 
@@ -102,7 +117,7 @@ popupWithFormEditProfile.setEventListeners();
 // форма add-card
 const popupWithFormAddCard = new PopupWithForm('.popup_type_add-card', {
   submitHandlerForm: (valuesInput) => {
-
+    popupWithFormAddCard.changeTextOfButton('Сохранение...');
     api.addCard(valuesInput.place, valuesInput.link)
       .then(res => {
 
@@ -115,6 +130,16 @@ const popupWithFormAddCard = new PopupWithForm('.popup_type_add-card', {
           id: res._id
         });
         cardsList.addItem(cardItem);
+      })
+      .then(() => {
+        popupWithFormAddCard.close()
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+        })
+      .finally((isLoading) => {
+        popupWithFormAddCard.changeTextOfButton('Создать');
+
       })
 
   }
@@ -155,6 +180,9 @@ function createCard(data) {
           card.handleDeleteCard()
           cardConfirmDelete.close()
         })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        });
       })
 
     },
@@ -165,13 +193,19 @@ function createCard(data) {
         api.deleteLikes(id)
         .then(res => {
         card.setLikes(res.likes)
-      })
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        });
 
       } else {
           api.addLikes(id)
           .then(res => {
           card.setLikes(res.likes)
           })
+          .catch((err) => {
+            console.log(err); // выведем ошибку в консоль
+          });
       }
 
     })
@@ -183,18 +217,7 @@ function createCard(data) {
 }
 
 // создаем Section
-const cardsList = new Section({
-  data: [],
-  renderer: (cardItem) => {
-    const card = createCard(cardItem);
-    cardsList.addItem(card);
-
-  },
-},
-    '.elements'
-);
-
-cardsList.renderItems();
+const cardsList = new Section('.elements');
 
 const cardConfirmDelete = new PopupWithForm('.popup_type_delete-confirm', {
   submitHandlerForm: () => {
@@ -206,10 +229,21 @@ cardConfirmDelete.setEventListeners();
 
 const updateUserAvatar = new PopupWithForm('.popup_type_update-avatar', {
   submitHandlerForm: (valuesInput) => {
+    updateUserAvatar.changeTextOfButton('Сохранение...');
     api.updateAvatar(valuesInput.avatar)
       .then(res => {
 
         userInfo.setUserInfo(res.name, res.about, res.avatar);
+
+      })
+      .then(() => {
+        updateUserAvatar.close()
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      })
+      .finally((isLoading) => {
+        updateUserAvatar.changeTextOfButton('Сохранить');
 
       })
   }

@@ -1,5 +1,5 @@
 .popup__submit {
-  width: 100%;
+  min-width: 358px;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -24,6 +24,7 @@
     font-size: 14px;
     line-height: 17px;
     min-height: 46px;
+    min-width: 238px;
   }
 
 }
